@@ -1,3 +1,4 @@
+import os
 import re
 import pandas as pd
 import openpyxl as xl
@@ -25,7 +26,7 @@ class Analyzer:
     """
 
 
-    DB_FILE = r'C:\Users\j3392\OneDrive\Nota Paraná\Estabelecimentos.xlsx'
+    DB_FILE = os.path.expandvars(r'%USERPROFILE%\OneDrive\Nota Paraná\Estabelecimentos.xlsx')
 
 
     def __init__(self):

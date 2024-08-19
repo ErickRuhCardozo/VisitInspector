@@ -10,7 +10,7 @@ from analyzer import Analyzer
 from tkinter import messagebox
 
 
-REPORTS_PATH = r'C:\Users\j3392\OneDrive\Nota Paraná\Estabelecimentos Não Visitados\2024\Agosto'
+REPORTS_PATH = os.path.expandvars(r'%USERPROFILE%\OneDrive\Nota Paraná\Estabelecimentos Não Visitados\2024\Agosto')
 COLLECTORS = ('Claudinei', 'Moto', 'Motorista', 'Noturno', 'Vitor')
 
 
