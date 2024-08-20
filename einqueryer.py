@@ -22,7 +22,7 @@ class EinQueryer:
         
         res = res.json()
         establishment = dict()
-        establishment['region'] = res['BAIRRO']
+        establishment['region'] = res['BAIRRO'] if 'BAIRRO' in res else ''
 
         if res['NOME FANTASIA'] == '':
             establishment['name'] = res['RAZAO SOCIAL']
@@ -30,7 +30,12 @@ class EinQueryer:
             establishment['name'] = res['NOME FANTASIA']
 
         establishment['ein'] = EinQueryer.format_ein(res['CNPJ'])
-        establishment['address'] = f'{res['LOGRADOURO']}, {res['NUMERO']}'
+
+        if 'LOGRADOURO' in res and 'NUMERO' in res:
+            establishment['address'] = f'{res['LOGRADOURO']}, {res['NUMERO']}'
+        else:
+            establishment['address'] = '???'
+
         return establishment
     
 
