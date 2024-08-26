@@ -22,9 +22,9 @@ class EinQueryer:
         
         res = res.json()
         establishment = dict()
-        establishment['region'] = res['BAIRRO'] if 'BAIRRO' in res else ''
+        establishment['region'] = res['BAIRRO'] if 'BAIRRO' in res else '?'
 
-        if res['NOME FANTASIA'] == '':
+        if 'NOME FANTASIA' in res and res['NOME FANTASIA'] == '':
             establishment['name'] = res['RAZAO SOCIAL']
         else:
             establishment['name'] = res['NOME FANTASIA']
