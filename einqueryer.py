@@ -25,9 +25,9 @@ class EinQueryer:
         establishment['region'] = res['BAIRRO'] if 'BAIRRO' in res else '?'
 
         if 'NOME FANTASIA' in res and res['NOME FANTASIA'] == '':
-            establishment['name'] = res['RAZAO SOCIAL']
+            establishment['name'] = res['RAZAO SOCIAL'] if 'RAZAO SOCIAL' in res else '???'
         else:
-            establishment['name'] = res['NOME FANTASIA']
+            establishment['name'] = res['NOME FANTASIA'] if 'NOME FANTASIA' in res else '???'
 
         establishment['ein'] = EinQueryer.format_ein(res['CNPJ'])
 
