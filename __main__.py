@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 ESTABLISHMENTS_DB = os.path.expandvars(r'%USERPROFILE%\OneDrive\Nota Paraná\Estabelecimentos.xlsx')
-REPORTS_PATH = os.path.expandvars(r'%USERPROFILE%\OneDrive\Nota Paraná\Estabelecimentos Não Visitados\2024\Agosto')
+REPORTS_PATH = os.path.expandvars(r'%USERPROFILE%\OneDrive\Nota Paraná\Estabelecimentos Não Visitados\2024\Setembro')
 
 
 def cls():
@@ -185,6 +185,8 @@ def get_workbook(collector: str, date: datetime) -> tuple[str, xl.Workbook]:
 
 def save_nonvisited(df: pd.DataFrame, collector: str, date: datetime, eins: set[str]) -> None:
     print(f'Salvando relatório de estabelecimentos não visitados para o coletor "{collector}"')
+    df = df[df['Coletor'] == collector]
+    df = df[df['Dias'].str.contains(str(date.weekday() + 2), na=False)]
     path, wb = get_workbook(collector, date)
     ws = wb.active
     eins = [e.replace('.', '') for e in eins]
