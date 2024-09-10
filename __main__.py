@@ -17,25 +17,12 @@ def cls():
         os.system('clear')
 
 
-def get_collector(df: pd.DataFrame) -> str:
-    collectors = df['Coletor'].unique().tolist()
-    
-    while True:
-        cls()
-        print('Informe o coletor:')
-        
-        for i, c in enumerate(collectors):
-            print(f'{i+1} -> {c}')
-        
-        try:
-            c = int(input('>>> '))
-        except Exception:
-            continue
-        
-        if c-1 < 0 or c-1 >= len(collectors):
-            continue
-        
-        return collectors[c-1]
+def get_collector(df: pd.DataFrame, eins: set[str]) -> str:
+    """Figure out the collector based on the EINs passed."""
+    f = df.loc[df['CNPJ'].isin(eins)]
+    f = f.drop_duplicates(subset=['CNPJ'])
+    f = f['Coletor'].value_counts()
+    return f[f == f.max()].index[0]
 
 
 def get_date() -> datetime:
@@ -207,9 +194,9 @@ def save_nonvisited(df: pd.DataFrame, collector: str, date: datetime, eins: set[
 
 def main():
     df = pd.read_excel(ESTABLISHMENTS_DB, dtype={'CNPJ': str, 'Dias': str})
-    collector = get_collector(df)
     date = get_date()
     eins = get_eins()
+    collector = get_collector(df, eins)
     cls()
     find_and_update(df, collector, date, eins)
     save_nonvisited(df, collector, date, eins)
