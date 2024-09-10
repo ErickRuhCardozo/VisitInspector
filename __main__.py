@@ -19,8 +19,10 @@ def cls():
 
 def get_collector(df: pd.DataFrame, eins: set[str]) -> str:
     """Figure out the collector based on the EINs passed."""
+    eins = map(lambda x: x.replace('.', ''), eins)
     f = df.loc[df['CNPJ'].isin(eins)]
     f = f.drop_duplicates(subset=['CNPJ'])
+    assert not f.empty, 'O coletor não pôde ser encontrado' # if this execute, we're fucked...
     f = f['Coletor'].value_counts()
     return f[f == f.max()].index[0]
 
