@@ -141,7 +141,9 @@ def find_and_update(df: pd.DataFrame, collector: str, date: datetime, eins: set[
         if f.empty:
             print(f'Consultando o CNPJ "{ein}"')
             establishment = query_ein(ein)
-            append_establishment(establishment, ein, collector, date)
+
+            if establishment is not None:
+                append_establishment(establishment, ein, collector, date)
         else:
             if f.iloc[0]['Coletor'] != collector:
                 print(f'Atualizando o Coletor para o CNPJ "{ein}"')
