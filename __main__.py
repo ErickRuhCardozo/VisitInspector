@@ -45,6 +45,10 @@ def get_date() -> datetime:
 def extract_ein(text: str) -> str:
     """Extract the EIN from an QRCode URL"""
     match = re.search(r'p=(\d{44})', text)
+    
+    if match is None or len(match.groups()) <= 1:
+        return '???'
+    
     ak = match.group(1)
     return f'{ak[6:8]}.{ak[8:11]}.{ak[11:14]}/{ak[14:18]}-{ak[18:20]}'
 
