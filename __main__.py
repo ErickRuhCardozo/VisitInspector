@@ -46,7 +46,7 @@ def extract_ein(text: str) -> str:
     """Extract the EIN from an QRCode URL"""
     match = re.search(r'p=(\d{44})', text)
     
-    if match is None or len(match.groups()) <= 1:
+    if match is None or len(match.groups()) < 1:
         return '???'
     
     ak = match.group(1)
